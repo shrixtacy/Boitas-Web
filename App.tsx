@@ -6,6 +6,58 @@ import CategoryBanner from './components/CategoryBanner';
 import { DividerLine, CornerMotif, IconGrain, IconHand, IconTemple } from './components/Motifs';
 
 const App: React.FC = () => {
+  const [khajaMousePos, setKhajaMousePos] = React.useState({ x: 0, y: 0 });
+  const [khajaScrollOffset, setKhajaScrollOffset] = React.useState(0);
+  const [chennaMousePos, setChennaMousePos] = React.useState({ x: 0, y: 0 });
+  const [chennaScrollOffset, setChennaScrollOffset] = React.useState(0);
+  const khajaRef = React.useRef<HTMLDivElement>(null);
+  const chennaRef = React.useRef<HTMLDivElement>(null);
+
+  const handleKhajaMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (khajaRef.current) {
+      const rect = khajaRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+      setKhajaMousePos({ x, y });
+    }
+  };
+
+  const handleKhajaMouseLeave = () => {
+    setKhajaMousePos({ x: 0, y: 0 });
+  };
+
+  const handleChennaMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (chennaRef.current) {
+      const rect = chennaRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+      setChennaMousePos({ x, y });
+    }
+  };
+
+  const handleChennaMouseLeave = () => {
+    setChennaMousePos({ x: 0, y: 0 });
+  };
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (khajaRef.current) {
+        const rect = khajaRef.current.getBoundingClientRect();
+        const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        setKhajaScrollOffset(scrollProgress);
+      }
+      if (chennaRef.current) {
+        const rect = chennaRef.current.getBoundingClientRect();
+        const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        setChennaScrollOffset(scrollProgress);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="w-full min-h-screen bg-beige selection:bg-maroon selection:text-beige">
       
@@ -77,7 +129,7 @@ const App: React.FC = () => {
         <div className="max-w-4xl mx-auto text-center space-y-12 relative z-10">
            <DividerLine className="opacity-40" />
            <p className="text-2xl md:text-4xl font-serif leading-relaxed">
-             “Boitas celebrates Odisha’s culinary roots with a modern twist. Every bite carries the purity of local ingredients and the warmth of our heritage.”
+             "Boitas celebrates Odisha's culinary roots with a modern twist. Every bite carries the purity of local ingredients and the warmth of our heritage."
            </p>
            
            <div className="flex flex-wrap justify-center gap-12 md:gap-16 pt-8 opacity-90">
@@ -105,26 +157,113 @@ const App: React.FC = () => {
       </section>
 
       {/* 3. CHENNA PIE CATEGORY */}
-      <div id="chenna">
+      <div 
+        id="chenna" 
+        className="relative" 
+        ref={chennaRef}
+        onMouseMove={handleChennaMouseMove}
+        onMouseLeave={handleChennaMouseLeave}
+      >
         <CategoryBanner 
           title="Chenna Pie" 
-          subtitle="Odisha’s Classic, Redesigned. Soft, rich, handcrafted. Available in three flavors."
+          subtitle="Odisha's Classic, Redesigned. Soft, rich, handcrafted. Available in three flavors."
           bgColor="bg-gold"
           textColor="text-maroon"
         />
+        
+        {/* Extended Description */}
+        <div className="bg-gold text-maroon pb-16 px-8 relative z-10 -mt-20">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <p className="text-lg md:text-xl font-light leading-relaxed opacity-90">
+              Chenna Pie is a beloved treasure from Odisha's rich culinary heritage, where soft, melt-in-your-mouth chenna meets 
+              the delicate sweetness of tradition. This iconic dessert has graced celebrations and festivals for generations, 
+              symbolizing joy, prosperity, and the warmth of Odia hospitality.
+            </p>
+            <p className="text-lg md:text-xl font-light leading-relaxed opacity-90">
+              Each piece is crafted with fresh chenna, infused with aromatic cardamom and a hint of saffron, creating a texture 
+              that's both rich and light. Our Chenna Pie reimagines this classic with modern elegance—perfect for weddings, 
+              special occasions, or simply indulging in a moment of pure bliss.
+            </p>
+            <p className="text-base md:text-lg font-light italic opacity-80 pt-4">
+              "A celebration of tradition, crafted with love and served with pride."
+            </p>
+          </div>
+        </div>
+        
+        {/* Chenna Pie Images - With Random Mouse Hover & Scroll Parallax Effect */}
+        {/* Left Top Corner - BIGGEST & TILTED */}
+        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute -top-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 70 + chennaScrollOffset * 50}px, ${chennaMousePos.y * 60 + chennaScrollOffset * -30}px) rotate(${-15 + chennaScrollOffset * 10}deg)`}} />
+        
+        {/* Left Bottom Corner - BIGGEST & TILTED */}
+        <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute -bottom-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -55 + chennaScrollOffset * -40}px, ${chennaMousePos.y * -65 + chennaScrollOffset * 60}px) rotate(${25 + chennaScrollOffset * -15}deg)`}} />
+        
+        {/* Right Top Corner - BIGGEST & TILTED */}
+        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute -top-16 -right-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -75 + chennaScrollOffset * -50}px, ${chennaMousePos.y * 68 + chennaScrollOffset * -40}px) rotate(${18 + chennaScrollOffset * 12}deg)`}} />
+        
+        {/* Right Bottom Corner - BIGGEST & TILTED */}
+        <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute -bottom-16 -right-16 w-[28rem] h-[28rem] object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 85 + chennaScrollOffset * 60}px, ${chennaMousePos.y * -72 + chennaScrollOffset * 70}px) rotate(${-22 + chennaScrollOffset * -18}deg)`}} />
+        
+        {/* Near "C" in Chenna Pie title - left side */}
+        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute top-1/3 left-[15%] w-32 h-32 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 50 + chennaScrollOffset * 30}px, ${chennaMousePos.y * 45 + chennaScrollOffset * -20}px) rotate(${chennaScrollOffset * 8}deg)`}} />
+        
+        {/* Near "flavors." in subtitle - right bottom of text */}
+        <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute top-2/3 right-[15%] w-36 h-36 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -62 + chennaScrollOffset * -35}px, ${chennaMousePos.y * -58 + chennaScrollOffset * 45}px) rotate(${chennaScrollOffset * -10}deg)`}} />
       </div>
 
       {/* 4. CHENNA PIE SHOWCASE */}
       <ScrollShowcase products={CHENNA_VARIANTS} bgColor="bg-beige" textColor="text-maroon" />
 
       {/* 5. KHAJA BITES CATEGORY */}
-      <div id="khaja">
+      <div 
+        id="khaja" 
+        className="relative" 
+        ref={khajaRef}
+        onMouseMove={handleKhajaMouseMove}
+        onMouseLeave={handleKhajaMouseLeave}
+      >
         <CategoryBanner 
           title="Khaja Bites" 
           subtitle="The heritage sweet of Odisha, reimagined in bite-sized form. Crispy. Light. Perfectly Odia."
           bgColor="bg-maroon"
           textColor="text-beige"
         />
+        
+        {/* Extended Description */}
+        <div className="bg-maroon text-beige pb-16 px-8 relative z-10 -mt-20">
+          <div className="max-w-4xl mx-auto text-center space-y-6">
+            <p className="text-lg md:text-xl font-light leading-relaxed opacity-90">
+              Khaja is a timeless delicacy from the temples of Odisha, where layers of flaky pastry meet the perfect balance of sweetness. 
+              Traditionally offered to Lord Jagannath, this sacred sweet has been cherished for centuries as a symbol of devotion and celebration.
+            </p>
+            <p className="text-lg md:text-xl font-light leading-relaxed opacity-90">
+              Each bite reveals delicate, crispy layers that melt in your mouth, infused with the essence of pure ghee and cardamom. 
+              Our Khaja Bites honor this ancient recipe while bringing you the convenience of modern indulgence—perfect for gifting, 
+              festive occasions, or simply savoring a piece of Odia heritage.
+            </p>
+            <p className="text-base md:text-lg font-light italic opacity-80 pt-4">
+              "A taste that transcends time, connecting you to the rich culinary traditions of the East."
+            </p>
+          </div>
+        </div>
+        
+        {/* Khaja Images - With Random Mouse Hover & Scroll Parallax Effect */}
+        {/* Left Top Corner - BIGGEST & TILTED */}
+        <img src="/khaja.png" alt="Khaja" className="absolute -top-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 70 + khajaScrollOffset * 50}px, ${khajaMousePos.y * 60 + khajaScrollOffset * -30}px) rotate(${-15 + khajaScrollOffset * 10}deg)`}} />
+        
+        {/* Left Bottom Corner - BIGGEST & TILTED */}
+        <img src="/khaja.png" alt="Khaja" className="absolute -bottom-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -55 + khajaScrollOffset * -40}px, ${khajaMousePos.y * -65 + khajaScrollOffset * 60}px) rotate(${25 + khajaScrollOffset * -15}deg)`}} />
+        
+        {/* Right Top Corner - BIGGEST & TILTED */}
+        <img src="/khaja.png" alt="Khaja" className="absolute -top-16 -right-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -75 + khajaScrollOffset * -50}px, ${khajaMousePos.y * 68 + khajaScrollOffset * -40}px) rotate(${18 + khajaScrollOffset * 12}deg)`}} />
+        
+        {/* Right Bottom Corner - BIGGEST & TILTED */}
+        <img src="/khaja.png" alt="Khaja" className="absolute -bottom-16 -right-16 w-[28rem] h-[28rem] object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 85 + khajaScrollOffset * 60}px, ${khajaMousePos.y * -72 + khajaScrollOffset * 70}px) rotate(${-22 + khajaScrollOffset * -18}deg)`}} />
+        
+        {/* Near "K" in Khaja Bites title - left side, moved up */}
+        <img src="/khaja.png" alt="Khaja" className="absolute top-1/3 left-[15%] w-32 h-32 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 50 + khajaScrollOffset * 30}px, ${khajaMousePos.y * 45 + khajaScrollOffset * -20}px) rotate(${khajaScrollOffset * 8}deg)`}} />
+        
+        {/* Near "Odia." in subtitle - right bottom of text, shifted more right */}
+        <img src="/khaja.png" alt="Khaja" className="absolute top-2/3 right-[15%] w-36 h-36 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -62 + khajaScrollOffset * -35}px, ${khajaMousePos.y * -58 + khajaScrollOffset * 45}px) rotate(${khajaScrollOffset * -10}deg)`}} />
       </div>
 
       {/* 6. KHAJA BITES SHOWCASE */}
