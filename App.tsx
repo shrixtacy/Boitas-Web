@@ -107,11 +107,11 @@ const App: React.FC = () => {
         </div>
 
         {/* Illustration at bottom - Full width, overflowing into next section */}
-        <div className="absolute -bottom-20 md:-bottom-32 lg:-bottom-40 left-0 w-full z-20">
+        <div className="absolute bottom-16 md:-bottom-32 lg:-bottom-40 left-0 w-full z-20">
           <img 
             src="/Boita Illustration 1.png" 
             alt="Boita Illustration" 
-            className="w-full h-auto object-cover"
+            className="w-full h-auto object-cover scale-125 md:scale-100"
           />
         </div>
 
@@ -192,16 +192,16 @@ const App: React.FC = () => {
         
         {/* Chenna Pie Images - With Random Mouse Hover & Scroll Parallax Effect */}
         {/* Left Top Corner - BIGGEST & TILTED */}
-        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute -top-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 70 + chennaScrollOffset * 50}px, ${chennaMousePos.y * 60 + chennaScrollOffset * -30}px) rotate(${-15 + chennaScrollOffset * 10}deg)`}} />
+        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute -top-16 -left-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 70 + chennaScrollOffset * 50}px, ${chennaMousePos.y * 60 + chennaScrollOffset * -30}px) rotate(${-15 + chennaScrollOffset * 10}deg)`}} />
         
         {/* Left Bottom Corner - BIGGEST & TILTED */}
-        <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute -bottom-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -55 + chennaScrollOffset * -40}px, ${chennaMousePos.y * -65 + chennaScrollOffset * 60}px) rotate(${25 + chennaScrollOffset * -15}deg)`}} />
+        <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute -bottom-16 -left-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -55 + chennaScrollOffset * -40}px, ${chennaMousePos.y * -65 + chennaScrollOffset * 60}px) rotate(${25 + chennaScrollOffset * -15}deg)`}} />
         
         {/* Right Top Corner - BIGGEST & TILTED */}
-        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute -top-16 -right-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -75 + chennaScrollOffset * -50}px, ${chennaMousePos.y * 68 + chennaScrollOffset * -40}px) rotate(${18 + chennaScrollOffset * 12}deg)`}} />
+        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute -top-16 -right-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -75 + chennaScrollOffset * -50}px, ${chennaMousePos.y * 68 + chennaScrollOffset * -40}px) rotate(${18 + chennaScrollOffset * 12}deg)`}} />
         
         {/* Right Bottom Corner - BIGGEST & TILTED */}
-        <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute -bottom-16 -right-16 w-[28rem] h-[28rem] object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 85 + chennaScrollOffset * 60}px, ${chennaMousePos.y * -72 + chennaScrollOffset * 70}px) rotate(${-22 + chennaScrollOffset * -18}deg)`}} />
+        <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute -bottom-16 -right-16 w-40 h-40 md:w-[28rem] md:h-[28rem] object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 85 + chennaScrollOffset * 60}px, ${chennaMousePos.y * -72 + chennaScrollOffset * 70}px) rotate(${-22 + chennaScrollOffset * -18}deg)`}} />
         
         {/* Near "C" in Chenna Pie title - left side */}
         <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute top-1/3 left-[15%] w-32 h-32 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * 50 + chennaScrollOffset * 30}px, ${chennaMousePos.y * 45 + chennaScrollOffset * -20}px) rotate(${chennaScrollOffset * 8}deg)`}} />
@@ -248,16 +248,16 @@ const App: React.FC = () => {
         
         {/* Khaja Images - With Random Mouse Hover & Scroll Parallax Effect */}
         {/* Left Top Corner - BIGGEST & TILTED */}
-        <img src="/khaja.png" alt="Khaja" className="absolute -top-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 70 + khajaScrollOffset * 50}px, ${khajaMousePos.y * 60 + khajaScrollOffset * -30}px) rotate(${-15 + khajaScrollOffset * 10}deg)`}} />
+        <img src="/khaja.png" alt="Khaja" className="absolute -top-16 -left-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 70 + khajaScrollOffset * 50}px, ${khajaMousePos.y * 60 + khajaScrollOffset * -30}px) rotate(${-15 + khajaScrollOffset * 10}deg)`}} />
         
         {/* Left Bottom Corner - BIGGEST & TILTED */}
-        <img src="/khaja.png" alt="Khaja" className="absolute -bottom-16 -left-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -55 + khajaScrollOffset * -40}px, ${khajaMousePos.y * -65 + khajaScrollOffset * 60}px) rotate(${25 + khajaScrollOffset * -15}deg)`}} />
+        <img src="/khaja.png" alt="Khaja" className="absolute -bottom-16 -left-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -55 + khajaScrollOffset * -40}px, ${khajaMousePos.y * -65 + khajaScrollOffset * 60}px) rotate(${25 + khajaScrollOffset * -15}deg)`}} />
         
         {/* Right Top Corner - BIGGEST & TILTED */}
-        <img src="/khaja.png" alt="Khaja" className="absolute -top-16 -right-16 w-96 h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -75 + khajaScrollOffset * -50}px, ${khajaMousePos.y * 68 + khajaScrollOffset * -40}px) rotate(${18 + khajaScrollOffset * 12}deg)`}} />
+        <img src="/khaja.png" alt="Khaja" className="absolute -top-16 -right-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -75 + khajaScrollOffset * -50}px, ${khajaMousePos.y * 68 + khajaScrollOffset * -40}px) rotate(${18 + khajaScrollOffset * 12}deg)`}} />
         
         {/* Right Bottom Corner - BIGGEST & TILTED */}
-        <img src="/khaja.png" alt="Khaja" className="absolute -bottom-16 -right-16 w-[28rem] h-[28rem] object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 85 + khajaScrollOffset * 60}px, ${khajaMousePos.y * -72 + khajaScrollOffset * 70}px) rotate(${-22 + khajaScrollOffset * -18}deg)`}} />
+        <img src="/khaja.png" alt="Khaja" className="absolute -bottom-16 -right-16 w-40 h-40 md:w-[28rem] md:h-[28rem] object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 85 + khajaScrollOffset * 60}px, ${khajaMousePos.y * -72 + khajaScrollOffset * 70}px) rotate(${-22 + khajaScrollOffset * -18}deg)`}} />
         
         {/* Near "K" in Khaja Bites title - left side, moved up */}
         <img src="/khaja.png" alt="Khaja" className="absolute top-1/3 left-[15%] w-32 h-32 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * 50 + khajaScrollOffset * 30}px, ${khajaMousePos.y * 45 + khajaScrollOffset * -20}px) rotate(${khajaScrollOffset * 8}deg)`}} />
