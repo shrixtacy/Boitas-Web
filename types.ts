@@ -4,6 +4,19 @@ export interface ProductVariant {
   description: string;
   ingredients: string[];
   image: string;
+  originalPrice: number;
+  discountedPrice: number;
+  weight: string;
+  category: 'khaja' | 'chenna';
+}
+
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  weight: string;
+  category: 'khaja' | 'chenna';
 }
 
 export interface ProductShowcaseProps {
