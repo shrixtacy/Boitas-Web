@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowRight, Instagram, Facebook, Mail, MapPin, Plus } from 'lucide-react';
-import { CHENNA_VARIANTS, KHAJA_VARIANTS, UPCOMING_PRODUCTS } from './constants';
+import { CHENNA_VARIANTS, KHAJA_VARIANTS, UPCOMING_PRODUCTS, MENU_ITEMS } from './constants';
 import ScrollShowcase from './components/ScrollShowcase';
 import CategoryBanner from './components/CategoryBanner';
 import { DividerLine, CornerMotif, IconGrain, IconHand, IconTemple } from './components/Motifs';
@@ -9,59 +9,7 @@ import Cart from './components/Cart';
 import CartButton from './components/CartButton';
 import MobileCartBar from './components/MobileCartBar';
 
-// Menu items data
-const MENU_ITEMS = [
-  {
-    id: 'cp-chocolate',
-    name: 'Chocolate Chenna Pie',
-    description: 'Rich, decadent chenna pie infused with premium cocoa and dark chocolate. A modern twist on the traditional recipe that melts in your mouth with every bite.',
-    image: '/Chenna Pie 2.png',
-    originalPrice: 59,
-    discountedPrice: 49,
-    weight: '100g',
-    category: 'chenna' as const
-  },
-  {
-    id: 'cp-fruit-nut',
-    name: 'Dry Fruit & Jaggery Chenna Pie',
-    description: 'Traditional chenna pie sweetened with organic jaggery and loaded with premium dry fruits including almonds, cashews, and pistachios for a rich, wholesome experience.',
-    image: '/Chenna Pie.png',
-    originalPrice: 59,
-    discountedPrice: 49,
-    weight: '100g',
-    category: 'chenna' as const
-  },
-  {
-    id: 'kb-salted',
-    name: 'Salted Khaja Bites',
-    description: 'Crispy, flaky khaja with a hint of sea salt. A unique savory twist on the classic sweet that\'s perfect for tea time and evening snacks.',
-    image: '/khaja.png',
-    originalPrice: 119,
-    discountedPrice: 79,
-    weight: '200g',
-    category: 'khaja' as const
-  },
-  {
-    id: 'kb-masala',
-    name: 'Masala Khaja Bites',
-    description: 'Spiced khaja bites with a blend of traditional Indian spices including cumin, coriander, and chaat masala. A bold, flavorful experience that awakens your taste buds.',
-    image: '/khaja.png',
-    originalPrice: 149,
-    discountedPrice: 99,
-    weight: '200g',
-    category: 'khaja' as const
-  },
-  {
-    id: 'kb-sweet',
-    name: 'Sweetened Khaja Bites',
-    description: 'Classic khaja bites with extra sweetness from jaggery and cardamom. The traditional favorite that brings back childhood memories and family celebrations.',
-    image: '/khaja.png',
-    originalPrice: 129,
-    discountedPrice: 89,
-    weight: '200g',
-    category: 'khaja' as const
-  }
-];
+
 
 const AppContent: React.FC = () => {
   const [khajaMousePos, setKhajaMousePos] = React.useState({ x: 0, y: 0 });
@@ -252,7 +200,16 @@ const AppContent: React.FC = () => {
             {MENU_ITEMS.map((item, index) => (
               <div key={item.id} className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-8`}>
                 <div className="md:w-1/2 flex justify-center">
-                  <img src={item.image} alt={item.name} className="w-48 h-48 md:w-64 md:h-64 object-contain" />
+                  <img 
+                    src={item.image} 
+                    alt={item.name} 
+                    className={`w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 object-contain transition-all duration-300 hover:scale-105 ${
+                      index % 4 === 0 ? 'transform rotate-3' :
+                      index % 4 === 1 ? 'transform -rotate-2' :
+                      index % 4 === 2 ? 'transform rotate-1' :
+                      'transform -rotate-3'
+                    }`}
+                  />
                 </div>
                 <div className={`md:w-1/2 text-center ${index % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
                   <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row md:justify-between' : 'md:flex-row-reverse md:justify-between'} md:items-start mb-4`}>
@@ -432,7 +389,59 @@ const AppContent: React.FC = () => {
         </div>
       </section>
 
-      {/* 9. FOOTER */}
+      {/* 9. CONTACT US SECTION */}
+      <section className="py-24 bg-beige text-maroon px-8 relative overflow-hidden">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-12">
+            <h2 className="text-5xl font-serif mb-4">Get in Touch</h2>
+            <p className="text-lg opacity-80 max-w-2xl mx-auto">
+              Have questions about our products or want to place a custom order? We'd love to hear from you.
+            </p>
+          </div>
+
+          <div className="flex flex-col md:flex-row justify-center items-center gap-12 md:gap-16">
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 rounded-full border-2 border-maroon flex items-center justify-center hover:bg-maroon hover:text-beige transition-all duration-300">
+                <Mail className="w-8 h-8" />
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-serif font-bold mb-2">Email Us</h3>
+                <a 
+                  href="mailto:bite@theboitas.com" 
+                  className="text-lg text-maroon hover:text-gold transition-colors underline decoration-1 underline-offset-4"
+                >
+                  bite@theboitas.com
+                </a>
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center gap-4">
+              <div className="w-16 h-16 rounded-full border-2 border-maroon flex items-center justify-center hover:bg-maroon hover:text-beige transition-all duration-300">
+                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <div className="text-center">
+                <h3 className="text-xl font-serif font-bold mb-2">Call Us</h3>
+                <a 
+                  href="tel:+919778708100" 
+                  className="text-lg text-maroon hover:text-gold transition-colors underline decoration-1 underline-offset-4"
+                >
+                  +91 97787 08100
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-maroon/20">
+            <p className="text-sm opacity-70 italic">
+              "We're here to make your sweet moments even sweeter. Reach out anytime!"
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 10. FOOTER */}
       <footer className="bg-maroon text-beige pt-20 pb-10 px-8 border-t-[8px] border-gold">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-16">
