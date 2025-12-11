@@ -2,9 +2,9 @@ import { ProductVariant, UpcomingProduct } from './types';
 
 export const CHENNA_VARIANTS: ProductVariant[] = [
   {
-    id: 'cp-01',
+    id: 'cp-chocolate',
     name: 'Chocolate Chenna Pie',
-    description: 'A decadent fusion of Swiss chocolate and traditional Chenna Poda. Baked to caramelized perfection.',
+    description: 'Rich, decadent chenna pie infused with premium cocoa and dark chocolate. A modern twist on the traditional recipe that melts in your mouth with every bite.',
     ingredients: ['Fresh Chenna', 'Cocoa Solids', 'Sugar', 'Cardamom'],
     image: '/Chocolate Chenna Pie.png',
     originalPrice: 59,
@@ -13,22 +13,11 @@ export const CHENNA_VARIANTS: ProductVariant[] = [
     category: 'chenna'
   },
   {
-    id: 'cp-02',
-    name: 'Dry Fruits & Jaggery Chenna Pie',
-    description: 'Earthy sweetness of organic jaggery combined with the crunch of premium cashews and almonds.',
+    id: 'cp-fruit-nut',
+    name: 'Dry Fruit & Jaggery Chenna Pie',
+    description: 'Traditional chenna pie sweetened with organic jaggery and loaded with premium dry fruits including almonds, cashews, and pistachios for a rich, wholesome experience.',
     ingredients: ['Organic Jaggery', 'Cashews', 'Almonds', 'Ghee'],
     image: '/Fruit & Nut chenna pie.png',
-    originalPrice: 59,
-    discountedPrice: 49,
-    weight: '100g',
-    category: 'chenna'
-  },
-  {
-    id: 'cp-03',
-    name: 'Classic Chenna Pie',
-    description: 'Traditional chenna pie with the authentic taste of Odisha. Pure, simple, and delicious.',
-    ingredients: ['Fresh Chenna', 'Sugar', 'Cardamom', 'Ghee'],
-    image: '/Chenna Pie.png',
     originalPrice: 59,
     discountedPrice: 49,
     weight: '100g',
@@ -38,9 +27,9 @@ export const CHENNA_VARIANTS: ProductVariant[] = [
 
 export const KHAJA_VARIANTS: ProductVariant[] = [
   {
-    id: 'kb-01',
+    id: 'kb-masala',
     name: 'Masala Khaja Bites',
-    description: 'The classic layered crispiness with a spicy twist. Perfect for tea-time snacking.',
+    description: 'Spiced khaja bites with a blend of traditional Indian spices including cumin, coriander, and chaat masala. A bold, flavorful experience that awakens your taste buds.',
     ingredients: ['Wheat Flour', 'Cumin', 'Chili Flakes', 'Ghee'],
     image: '/khaja.png',
     originalPrice: 149,
@@ -49,9 +38,9 @@ export const KHAJA_VARIANTS: ProductVariant[] = [
     category: 'khaja'
   },
   {
-    id: 'kb-02',
+    id: 'kb-salted',
     name: 'Salted Khaja Bites',
-    description: 'Simple, pure, and lightly salted to highlight the delicate layers of artisan pastry.',
+    description: 'Crispy, flaky khaja with a hint of sea salt. A unique savory twist on the classic sweet that\'s perfect for tea time and evening snacks.',
     ingredients: ['Refined Flour', 'Sea Salt', 'Clarified Butter'],
     image: '/Salted Khaja.png',
     originalPrice: 119,
@@ -60,9 +49,9 @@ export const KHAJA_VARIANTS: ProductVariant[] = [
     category: 'khaja'
   },
   {
-    id: 'kb-03',
+    id: 'kb-sweet',
     name: 'Sweetened Khaja Bites',
-    description: 'Glazed with a thin syrup coating, retaining the crunch while delivering a burst of sweetness.',
+    description: 'Classic khaja bites with extra sweetness from jaggery and cardamom. The traditional favorite that brings back childhood memories and family celebrations.',
     ingredients: ['Sugar Syrup', 'Cardamom', 'Refined Flour'],
     image: '/khaja.png',
     originalPrice: 129,
@@ -81,4 +70,10 @@ export const UPCOMING_PRODUCTS: UpcomingProduct[] = [
     name: 'Arisa Chews',
     type: 'Soft Candy'
   }
+];
+
+// Combined menu items for the main menu section
+export const MENU_ITEMS = [
+  ...CHENNA_VARIANTS,
+  ...KHAJA_VARIANTS
 ];
