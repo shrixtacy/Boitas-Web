@@ -10,8 +10,11 @@ const App: React.FC = () => {
   const [khajaScrollOffset, setKhajaScrollOffset] = React.useState(0);
   const [chennaMousePos, setChennaMousePos] = React.useState({ x: 0, y: 0 });
   const [chennaScrollOffset, setChennaScrollOffset] = React.useState(0);
+  const [menuMousePos, setMenuMousePos] = React.useState({ x: 0, y: 0 });
+  const [menuScrollOffset, setMenuScrollOffset] = React.useState(0);
   const khajaRef = React.useRef<HTMLDivElement>(null);
   const chennaRef = React.useRef<HTMLDivElement>(null);
+  const menuRef = React.useRef<HTMLDivElement>(null);
 
   const handleKhajaMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (khajaRef.current) {
@@ -39,6 +42,19 @@ const App: React.FC = () => {
     setChennaMousePos({ x: 0, y: 0 });
   };
 
+  const handleMenuMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (menuRef.current) {
+      const rect = menuRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
+      const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
+      setMenuMousePos({ x, y });
+    }
+  };
+
+  const handleMenuMouseLeave = () => {
+    setMenuMousePos({ x: 0, y: 0 });
+  };
+
   React.useEffect(() => {
     const handleScroll = () => {
       if (khajaRef.current) {
@@ -50,6 +66,11 @@ const App: React.FC = () => {
         const rect = chennaRef.current.getBoundingClientRect();
         const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
         setChennaScrollOffset(scrollProgress);
+      }
+      if (menuRef.current) {
+        const rect = menuRef.current.getBoundingClientRect();
+        const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        setMenuScrollOffset(scrollProgress);
       }
     };
     
@@ -88,11 +109,11 @@ const App: React.FC = () => {
             </div>
             
             <h1 className="font-serif text-maroon mb-8 whitespace-nowrap">
-              <div className="text-5xl md:text-6xl lg:text-7xl leading-tight mb-2">
-                Authentic Odia
+              <div className="text-6xl md:text-7xl lg:text-8xl leading-tight mb-2">
+                Layers of Joy
               </div>
-              <div className="text-4xl md:text-5xl lg:text-6xl leading-tight">
-                Delicacies, <span className="italic font-light">Reimagined.</span>
+              <div className="text-5xl md:text-6xl lg:text-7xl leading-tight">
+                in <span className="italic font-light">Every Bite</span>
               </div>
             </h1>
             
@@ -156,7 +177,138 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. CHENNA PIE CATEGORY */}
+      {/* 3. MENU SECTION */}
+      <section 
+        id="menu" 
+        className="py-24 px-8 bg-beige text-maroon relative overflow-hidden" 
+        ref={menuRef}
+        onMouseMove={handleMenuMouseMove}
+        onMouseLeave={handleMenuMouseLeave}
+      >
+        <div className="max-w-6xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl font-serif mb-4">Our Menu</h2>
+            <p className="text-lg opacity-80 max-w-2xl mx-auto">
+              Discover our handcrafted collection of authentic Odia delicacies, each made with traditional recipes and premium ingredients.
+            </p>
+          </div>
+
+          <div className="space-y-16 mb-16">
+            {/* Chocolate Chenna Pie - Image Left, Text Right */}
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="md:w-1/2 flex justify-center">
+                <img src="/Chenna Pie 2.png" alt="Chocolate Chenna Pie" className="w-48 h-48 md:w-64 md:h-64 object-contain" />
+              </div>
+              <div className="md:w-1/2 text-center md:text-left">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold mb-2 md:mb-0">Chocolate Chenna Pie</h3>
+                  <span className="text-2xl md:text-3xl font-bold text-gold">₹349</span>
+                </div>
+                <p className="text-maroon/80 text-lg leading-relaxed">
+                  Rich, decadent chenna pie infused with premium cocoa and dark chocolate. A modern twist on the traditional recipe that melts in your mouth with every bite.
+                </p>
+              </div>
+            </div>
+
+            {/* Dry Fruit and Jaggery Chenna Pie - Image Right, Text Left */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-8">
+              <div className="md:w-1/2 flex justify-center">
+                <img src="/Chenna Pie.png" alt="Dry Fruit Chenna Pie" className="w-48 h-48 md:w-64 md:h-64 object-contain" />
+              </div>
+              <div className="md:w-1/2 text-center md:text-right">
+                <div className="flex flex-col md:flex-row-reverse md:justify-between md:items-start mb-4">
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold mb-2 md:mb-0">Dry Fruit & Jaggery Chenna Pie</h3>
+                  <span className="text-2xl md:text-3xl font-bold text-gold">₹399</span>
+                </div>
+                <p className="text-maroon/80 text-lg leading-relaxed">
+                  Traditional chenna pie sweetened with organic jaggery and loaded with premium dry fruits including almonds, cashews, and pistachios for a rich, wholesome experience.
+                </p>
+              </div>
+            </div>
+
+            {/* Salted Khaja Bites - Image Left, Text Right */}
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="md:w-1/2 flex justify-center">
+                <img src="/khaja.png" alt="Salted Khaja Bites" className="w-48 h-48 md:w-64 md:h-64 object-contain" />
+              </div>
+              <div className="md:w-1/2 text-center md:text-left">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold mb-2 md:mb-0">Salted Khaja Bites</h3>
+                  <span className="text-2xl md:text-3xl font-bold text-gold">₹249</span>
+                </div>
+                <p className="text-maroon/80 text-lg leading-relaxed">
+                  Crispy, flaky khaja with a hint of sea salt. A unique savory twist on the classic sweet that's perfect for tea time and evening snacks.
+                </p>
+              </div>
+            </div>
+
+            {/* Masala Khaja Bites - Image Right, Text Left */}
+            <div className="flex flex-col md:flex-row-reverse items-center gap-8">
+              <div className="md:w-1/2 flex justify-center">
+                <img src="/khaja.png" alt="Masala Khaja Bites" className="w-48 h-48 md:w-64 md:h-64 object-contain" />
+              </div>
+              <div className="md:w-1/2 text-center md:text-right">
+                <div className="flex flex-col md:flex-row-reverse md:justify-between md:items-start mb-4">
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold mb-2 md:mb-0">Masala Khaja Bites</h3>
+                  <span className="text-2xl md:text-3xl font-bold text-gold">₹279</span>
+                </div>
+                <p className="text-maroon/80 text-lg leading-relaxed">
+                  Spiced khaja bites with a blend of traditional Indian spices including cumin, coriander, and chaat masala. A bold, flavorful experience that awakens your taste buds.
+                </p>
+              </div>
+            </div>
+
+            {/* Sweetened Khaja Bites - Image Left, Text Right */}
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="md:w-1/2 flex justify-center">
+                <img src="/khaja.png" alt="Sweetened Khaja Bites" className="w-48 h-48 md:w-64 md:h-64 object-contain" />
+              </div>
+              <div className="md:w-1/2 text-center md:text-left">
+                <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                  <h3 className="text-3xl md:text-4xl font-serif font-bold mb-2 md:mb-0">Sweetened Khaja Bites</h3>
+                  <span className="text-2xl md:text-3xl font-bold text-gold">₹229</span>
+                </div>
+                <p className="text-maroon/80 text-lg leading-relaxed">
+                  Classic khaja bites with extra sweetness from jaggery and cardamom. The traditional favorite that brings back childhood memories and family celebrations.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div className="text-center">
+            <button className="bg-maroon text-beige px-10 py-4 text-sm uppercase tracking-widest font-bold hover:bg-maroon-dark transition-all duration-300 shadow-xl">
+              View Full Menu
+            </button>
+          </div>
+        </div>
+
+        {/* Floating Menu Images - Multiple PNGs with Random Placement & Sizes */}
+        {/* Top Left Corner - Chocolate Chenna Pie */}
+        <img src="/Chocolate Chenna Pie.png" alt="Chocolate Chenna Pie" className="absolute -top-16 -left-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * 60 + menuScrollOffset * 40}px, ${menuMousePos.y * 50 + menuScrollOffset * -25}px) rotate(${-12 + menuScrollOffset * 8}deg)`}} />
+        
+        {/* Top Right Corner - Fruit & Nut Chenna Pie */}
+        <img src="/Fruit & Nut chenna pie.png" alt="Fruit & Nut Chenna Pie" className="absolute -top-16 -right-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * -70 + menuScrollOffset * -45}px, ${menuMousePos.y * 65 + menuScrollOffset * -35}px) rotate(${20 + menuScrollOffset * 12}deg)`}} />
+        
+        {/* Left Middle - Chenna Pie */}
+        <img src="/Chenna Pie.png" alt="Chenna Pie" className="absolute top-1/4 -left-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * 55 + menuScrollOffset * 35}px, ${menuMousePos.y * -60 + menuScrollOffset * 40}px) rotate(${-18 + menuScrollOffset * -10}deg)`}} />
+        
+        {/* Right Middle - Salted Khaja */}
+        <img src="/Salted Khaja.png" alt="Salted Khaja" className="absolute top-1/3 -right-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * -65 + menuScrollOffset * -40}px, ${menuMousePos.y * 45 + menuScrollOffset * 30}px) rotate(${15 + menuScrollOffset * -8}deg)`}} />
+        
+        {/* Bottom Left - Khaja */}
+        <img src="/khaja.png" alt="Khaja" className="absolute -bottom-16 -left-16 w-32 h-32 md:w-96 md:h-96 object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * 75 + menuScrollOffset * 50}px, ${menuMousePos.y * -55 + menuScrollOffset * -40}px) rotate(${-25 + menuScrollOffset * 15}deg)`}} />
+        
+        {/* Bottom Right - Chenna Pie 2 (BIGGEST) */}
+        <img src="/Chenna Pie 2.png" alt="Chenna Pie 2" className="absolute -bottom-16 -right-16 w-40 h-40 md:w-[28rem] md:h-[28rem] object-contain opacity-100 z-10 transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * -80 + menuScrollOffset * -55}px, ${menuMousePos.y * -70 + menuScrollOffset * 45}px) rotate(${22 + menuScrollOffset * -12}deg)`}} />
+        
+        {/* Center Left - Floating Chocolate Chenna Pie */}
+        <img src="/Chocolate Chenna Pie.png" alt="Chocolate Chenna Pie" className="absolute top-2/3 left-[8%] w-32 h-32 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * 45 + menuScrollOffset * 25}px, ${menuMousePos.y * 35 + menuScrollOffset * -20}px) rotate(${menuScrollOffset * 6}deg)`}} />
+        
+        {/* Center Right - Floating Fruit & Nut */}
+        <img src="/Fruit & Nut chenna pie.png" alt="Fruit & Nut Chenna Pie" className="absolute top-1/2 right-[12%] w-36 h-36 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${menuMousePos.x * -50 + menuScrollOffset * -30}px, ${menuMousePos.y * -40 + menuScrollOffset * 35}px) rotate(${menuScrollOffset * -7}deg)`}} />
+      </section>
+
+      {/* 4. CHENNA PIE CATEGORY */}
       <div 
         id="chenna" 
         className="relative" 
@@ -210,10 +362,10 @@ const App: React.FC = () => {
         <img src="/Chenna Pie 2.png" alt="Chenna Pie" className="absolute top-2/3 right-[15%] w-36 h-36 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${chennaMousePos.x * -62 + chennaScrollOffset * -35}px, ${chennaMousePos.y * -58 + chennaScrollOffset * 45}px) rotate(${chennaScrollOffset * -10}deg)`}} />
       </div>
 
-      {/* 4. CHENNA PIE SHOWCASE */}
+      {/* 5. CHENNA PIE SHOWCASE */}
       <ScrollShowcase products={CHENNA_VARIANTS} bgColor="bg-beige" textColor="text-maroon" />
 
-      {/* 5. KHAJA BITES CATEGORY */}
+      {/* 6. KHAJA BITES CATEGORY */}
       <div 
         id="khaja" 
         className="relative" 
@@ -266,10 +418,10 @@ const App: React.FC = () => {
         <img src="/khaja.png" alt="Khaja" className="absolute top-2/3 right-[15%] w-36 h-36 object-contain opacity-100 z-10 hidden md:block transition-all duration-500 ease-out hover:scale-110" style={{transform: `translate(${khajaMousePos.x * -62 + khajaScrollOffset * -35}px, ${khajaMousePos.y * -58 + khajaScrollOffset * 45}px) rotate(${khajaScrollOffset * -10}deg)`}} />
       </div>
 
-      {/* 6. KHAJA BITES SHOWCASE */}
+      {/* 7. KHAJA BITES SHOWCASE */}
       <ScrollShowcase products={KHAJA_VARIANTS} bgColor="bg-beige" textColor="text-maroon" />
 
-      {/* 7. UPCOMING PRODUCTS */}
+      {/* 8. UPCOMING PRODUCTS */}
       <section className="py-32 bg-gold text-maroon px-8 relative">
         <div className="max-w-6xl mx-auto">
           <div className="mb-16 text-center">
@@ -298,7 +450,7 @@ const App: React.FC = () => {
         </div>
       </section>
 
-      {/* 8. FOOTER */}
+      {/* 9. FOOTER */}
       <footer className="bg-maroon text-beige pt-20 pb-10 px-8 border-t-[8px] border-gold">
          <div className="max-w-6xl mx-auto">
            <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-16">
