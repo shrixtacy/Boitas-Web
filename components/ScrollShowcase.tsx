@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { Plus, ShoppingBag } from 'lucide-react';
 import { ProductVariant } from '../types';
 import { DividerLine } from './Motifs';
+import { useCart } from '../contexts/CartContext';
 
 interface ScrollShowcaseProps {
   products: ProductVariant[];
@@ -15,6 +17,17 @@ const ScrollShowcase: React.FC<ScrollShowcaseProps> = ({
 }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const { addItem } = useCart();
+
+  const handleAddToCart = (product: ProductVariant) => {
+    addItem({
+      id: product.id,
+      name: product.name,
+      price: product.discountedPrice,
+      weight: product.weight,
+      category: product.category
+    });
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -108,9 +121,27 @@ const ScrollShowcase: React.FC<ScrollShowcaseProps> = ({
 
                 <DividerLine className="opacity-40 mb-6" />
 
-                <p className="text-lg leading-relaxed opacity-90 mb-10">
+                <p className="text-lg leading-relaxed opacity-90 mb-8">
                   {product.description}
                 </p>
+
+                {/* Pricing */}
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="flex items-center gap-2">
+                    <span className="text-2xl font-bold text-gold">₹{product.discountedPrice}</span>
+                    <span className="text-lg text-current/60 line-through">₹{product.originalPrice}</span>
+                  </div>
+                  <span className="text-sm text-current/70">({product.weight})</span>
+                </div>
+
+                {/* Add to Cart Button */}
+                <button
+                  onClick={() => handleAddToCart(product)}
+                  className="group bg-maroon text-beige border border-maroon px-8 py-3 text-sm uppercase tracking-widest font-bold hover:bg-maroon-dark transition-all duration-300 flex items-center gap-3 shadow-lg mb-10"
+                >
+                  <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" />
+                  Add to Cart
+                </button>
 
                 <div>
                   <h4 className="text-xs uppercase tracking-[0.3em] opacity-60 font-bold mb-4">
@@ -156,9 +187,27 @@ const ScrollShowcase: React.FC<ScrollShowcaseProps> = ({
 
               <DividerLine className="opacity-40" />
 
-              <p className="text-lg leading-relaxed opacity-90">
+              <p className="text-lg leading-relaxed opacity-90 mb-6">
                 {product.description}
               </p>
+
+              {/* Pricing */}
+              <div className="flex items-center gap-4 mb-6">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl font-bold text-gold">₹{product.discountedPrice}</span>
+                  <span className="text-base text-current/60 line-through">₹{product.originalPrice}</span>
+                </div>
+                <span className="text-sm text-current/70">({product.weight})</span>
+              </div>
+
+              {/* Add to Cart Button */}
+              <button
+                onClick={() => handleAddToCart(product)}
+                className="group bg-maroon text-beige border border-maroon px-6 py-2.5 text-sm uppercase tracking-widest font-bold hover:bg-maroon-dark transition-all duration-300 flex items-center gap-2 shadow-lg mb-6"
+              >
+                <Plus className="w-4 h-4 group-hover:rotate-90 transition-transform" />
+                Add to Cart
+              </button>
 
               <div>
                 <h4 className="text-xs uppercase tracking-[0.3em] opacity-60 font-bold mb-3">
