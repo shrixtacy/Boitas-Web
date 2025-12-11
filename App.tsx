@@ -88,7 +88,10 @@ const AppContent: React.FC = () => {
 
         {/* Navigation - Fixed & Sticky */}
         <nav className="fixed top-0 w-full px-4 sm:px-6 md:px-8 py-4 flex justify-between items-center z-50 text-maroon bg-beige/95 backdrop-blur-sm border-b border-maroon/10 shadow-sm">
-          <div className="text-xl font-serif tracking-[0.2em] font-bold">BOITAS</div>
+          <div className="flex items-center gap-3">
+            <img src="/boitas-logo.jpeg" alt="Boitas Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain rounded-full" />
+            <div className="text-xl font-serif tracking-[0.2em] font-bold">BOITAS</div>
+          </div>
           <div className="hidden md:flex items-center gap-8 text-sm uppercase tracking-widest font-medium">
             <a href="#about" className="hover:text-maroon/70 transition-colors">About</a>
             <a href="#chenna" className="hover:text-maroon/70 transition-colors">Chenna Pie</a>
@@ -393,6 +396,9 @@ const AppContent: React.FC = () => {
       <section className="py-24 bg-beige text-maroon px-8 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-12">
+            <div className="flex justify-center mb-6">
+              <img src="/boitas-logo.jpeg" alt="Boitas Logo" className="w-16 h-16 md:w-20 md:h-20 object-contain rounded-full border-2 border-maroon/20" />
+            </div>
             <h2 className="text-5xl font-serif mb-4">Get in Touch</h2>
             <p className="text-lg opacity-80 max-w-2xl mx-auto">
               Have questions about our products or want to place a custom order? We'd love to hear from you.
@@ -446,7 +452,10 @@ const AppContent: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-16">
             <div className="space-y-6">
-              <h2 className="text-4xl font-serif tracking-widest font-bold">BOITAS</h2>
+              <div className="flex items-center gap-4">
+                <img src="/boitas-logo.jpeg" alt="Boitas Logo" className="w-12 h-12 object-contain rounded-full border border-beige/30" />
+                <h2 className="text-4xl font-serif tracking-widest font-bold">BOITAS</h2>
+              </div>
               <p className="max-w-xs text-sm opacity-70 leading-relaxed">
                 Celebrating the culinary artistry of Odisha.
                 Taking local flavors to the global stage.
