@@ -4,124 +4,182 @@ import { DividerLine } from './Motifs';
 
 interface ScrollShowcaseProps {
   products: ProductVariant[];
-  bgColor?: string; // Tailwind class
-  textColor?: string; // Tailwind class
+  bgColor?: string;
+  textColor?: string;
 }
 
-const ScrollShowcase: React.FC<ScrollShowcaseProps> = ({ 
-  products, 
-  bgColor = 'bg-beige', 
+const ScrollShowcase: React.FC<ScrollShowcaseProps> = ({
+  products,
+  bgColor = 'bg-beige',
   textColor = 'text-maroon'
 }) => {
-  const [activeId, setActiveId] = useState<string>(products[0].id);
-  const observerRef = useRef<IntersectionObserver | null>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: '-40% 0px -40% 0px', // Trigger when content is in the middle 20% of screen
-      threshold: 0
-    };
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const triggerPoint = scrollY + windowHeight / 2;
 
-    observerRef.current = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setActiveId(entry.target.id);
+      contentRefs.current.forEach((ref, index) => {
+        if (!ref) return;
+
+        const rect = ref.getBoundingClientRect();
+        const elementTop = scrollY + rect.top;
+        const elementBottom = elementTop + rect.height;
+
+        if (triggerPoint >= elementTop && triggerPoint < elementBottom) {
+          setActiveIndex(index);
         }
       });
-    }, options);
-
-    products.forEach((product) => {
-      const el = document.getElementById(product.id);
-      if (el && observerRef.current) {
-        observerRef.current.observe(el);
-      }
-    });
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
     };
-  }, [products]);
 
-  // Determine active product for initial render or fallback
-  const activeProduct = products.find(p => p.id === activeId) || products[0];
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <section className={`relative ${bgColor} ${textColor}`}>
-      <div className="flex flex-col lg:flex-row">
-        
-        {/* Sticky Left Panel - Images (Desktop Only) */}
-        <div className="hidden lg:block w-1/2 h-screen sticky top-0 overflow-hidden">
-          <div className="relative w-full h-full bg-inherit">
-             {products.map((product) => (
-                <div 
-                  key={product.id}
-                  className={`absolute inset-0 transition-opacity duration-700 ease-in-out flex items-center justify-center ${
-                    activeId === product.id ? 'opacity-100 z-10' : 'opacity-0 z-0'
+    <div className={`${bgColor} ${textColor} w-full`}>
+
+      {/* DESKTOP: Sticky Left Panel + Scrolling Right Panel */}
+      <div className="hidden md:flex relative items-start">
+
+        {/* LEFT: Sticky Image Panel */}
+        <div className="w-1/2 h-screen sticky top-0 flex items-center justify-center overflow-hidden">
+          <div className="relative w-full h-full">
+            {products.map((product, index) => (
+              <div
+                key={`image-${product.id}`}
+                className={`absolute inset-0 transition-opacity duration-700 ${activeIndex === index ? 'opacity-100' : 'opacity-0'
                   }`}
-                >
-                   <div className="relative w-full h-full">
-                      <img 
-                        src={product.image} 
-                        alt={product.name} 
-                        className="w-full h-full object-cover"
-                      />
-                      {/* Subtle overlay for better contrast if needed */}
-                      <div className="absolute inset-0 bg-black/10 mix-blend-multiply"></div>
-                      
-                      {/* Decorative border inside image */}
-                      <div className="absolute inset-12 border border-white/40 pointer-events-none"></div>
-                   </div>
+                style={{ zIndex: activeIndex === index ? 10 : 0 }}
+              >
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+                {/* Overlay */}
+                <div className="absolute inset-0 bg-black/20" />
+                {/* Border Frame */}
+                <div className="absolute inset-8 border-2 border-white/50" />
+                {/* Product Name */}
+                <div className="absolute bottom-8 left-8 text-white z-20">
+                  <h3 className="text-2xl font-serif font-bold">{product.name}</h3>
+                  <div className="w-12 h-0.5 bg-white mt-2" />
                 </div>
-             ))}
+              </div>
+            ))}
+
+            {/* Progress Dots */}
+            <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-3 z-30">
+              {products.map((_, index) => (
+                <div
+                  key={`dot-${index}`}
+                  className={`rounded-full transition-all duration-300 ${activeIndex === index
+                    ? 'w-2.5 h-2.5 bg-white'
+                    : 'w-2 h-2 bg-white/40'
+                    }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Scrolling Right Panel - Text Details */}
-        <div className="w-full lg:w-1/2">
-          {products.map((product) => (
-            <div 
-              key={product.id} 
-              id={product.id} 
-              className="min-h-screen flex flex-col justify-center p-8 md:p-16 lg:p-24 relative"
+        {/* RIGHT: Scrolling Content Panel */}
+        <div className="w-1/2">
+          {products.map((product, index) => (
+            <div
+              key={`content-${product.id}`}
+              ref={(el) => (contentRefs.current[index] = el)}
+              className="min-h-screen flex items-center justify-center px-12 py-16"
             >
-               {/* Mobile Image (Visible only on lg hidden) */}
-               <div className="lg:hidden mb-8 aspect-[4/5] overflow-hidden rounded-sm relative shadow-lg">
-                  <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
-                  <div className="absolute inset-4 border border-white/40 pointer-events-none"></div>
-               </div>
+              <div className="max-w-lg">
+                <div className="text-xs uppercase tracking-[0.3em] opacity-60 font-bold mb-6">
+                  Signature Selection
+                </div>
 
-              <div className="max-w-md relative animate-fade-in">
-                 <span className="text-sm font-bold tracking-[0.2em] uppercase mb-4 block opacity-60">
-                   Signature Selection
-                 </span>
-                 <h3 className="text-4xl md:text-5xl font-serif mb-6 leading-tight">
-                   {product.name}
-                 </h3>
-                 <DividerLine className="my-8 justify-start opacity-50" />
-                 <p className="text-lg leading-relaxed font-light mb-8 opacity-90">
-                   {product.description}
-                 </p>
-                 
-                 <div className="space-y-4">
-                   <h4 className="text-xs font-bold uppercase tracking-widest opacity-60">Crafted With</h4>
-                   <ul className="flex flex-wrap gap-2">
-                     {product.ingredients.map((ing, idx) => (
-                       <li key={idx} className="border border-current px-4 py-2 rounded-sm text-xs font-medium uppercase tracking-widest">
-                         {ing}
-                       </li>
-                     ))}
-                   </ul>
-                 </div>
+                <h2 className="text-4xl md:text-5xl font-serif font-bold leading-tight mb-6">
+                  {product.name}
+                </h2>
+
+                <DividerLine className="opacity-40 mb-6" />
+
+                <p className="text-lg leading-relaxed opacity-90 mb-10">
+                  {product.description}
+                </p>
+
+                <div>
+                  <h4 className="text-xs uppercase tracking-[0.3em] opacity-60 font-bold mb-4">
+                    Crafted With
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {product.ingredients.map((ingredient, idx) => (
+                      <span
+                        key={idx}
+                        className="border border-current px-4 py-1.5 text-xs uppercase tracking-widest"
+                      >
+                        {ingredient}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           ))}
         </div>
-
       </div>
-    </section>
+
+      {/* MOBILE: Simple Stacked Layout */}
+      <div className="md:hidden px-6 py-12 space-y-16">
+        {products.map((product) => (
+          <div key={`mobile-${product.id}`} className="space-y-6">
+            <div className="aspect-square rounded-lg overflow-hidden">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="space-y-4">
+              <div className="text-xs uppercase tracking-[0.3em] opacity-60 font-bold">
+                Signature Selection
+              </div>
+
+              <h2 className="text-3xl font-serif font-bold leading-tight">
+                {product.name}
+              </h2>
+
+              <DividerLine className="opacity-40" />
+
+              <p className="text-lg leading-relaxed opacity-90">
+                {product.description}
+              </p>
+
+              <div>
+                <h4 className="text-xs uppercase tracking-[0.3em] opacity-60 font-bold mb-3">
+                  Crafted With
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {product.ingredients.map((ingredient, idx) => (
+                    <span
+                      key={idx}
+                      className="border border-current px-3 py-1 text-xs uppercase tracking-widest"
+                    >
+                      {ingredient}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 
